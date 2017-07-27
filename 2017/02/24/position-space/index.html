@@ -1,0 +1,667 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CSS,JS,JQuery," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="工作中有一个很常见的需求，hover或者click某元素后，在该元素旁边出现弹框，主要就是获取该元素的位置坐标以及元素所占区块的大小。最近工作中就遇到了，发现js和jquery的实现方法有很大的区别，这里总结一下，备忘。   获取元素的相对位置信息  原生js方法   12var x = obj.offsetLeft,    y = obj.offsetTop;  jquery方法   123v">
+<meta name="keywords" content="CSS,JS,JQuery">
+<meta property="og:type" content="article">
+<meta property="og:title" content="获取元素位置信息和所占空间大小(via:js&amp;jquery)">
+<meta property="og:url" content="http://yoursite.com/2017/02/24/position-space/index.html">
+<meta property="og:site_name" content="Eric&#39;s Blog">
+<meta property="og:description" content="工作中有一个很常见的需求，hover或者click某元素后，在该元素旁边出现弹框，主要就是获取该元素的位置坐标以及元素所占区块的大小。最近工作中就遇到了，发现js和jquery的实现方法有很大的区别，这里总结一下，备忘。   获取元素的相对位置信息  原生js方法   12var x = obj.offsetLeft,    y = obj.offsetTop;  jquery方法   123v">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-27T10:29:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="获取元素位置信息和所占空间大小(via:js&amp;jquery)">
+<meta name="twitter:description" content="工作中有一个很常见的需求，hover或者click某元素后，在该元素旁边出现弹框，主要就是获取该元素的位置坐标以及元素所占区块的大小。最近工作中就遇到了，发现js和jquery的实现方法有很大的区别，这里总结一下，备忘。   获取元素的相对位置信息  原生js方法   12var x = obj.offsetLeft,    y = obj.offsetTop;  jquery方法   123v">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/24/position-space/"/>
+
+
+
+
+
+  <title> 获取元素位置信息和所占空间大小(via:js&jquery) | Eric's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Eric's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/24/position-space/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Eric">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Eric's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Eric's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                获取元素位置信息和所占空间大小(via:js&jquery)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-24T18:29:00+08:00">
+                2017-02-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>工作中有一个很常见的需求，hover或者click某元素后，在该元素旁边出现弹框，主要就是获取该元素的位置坐标以及元素所占区块的大小。最近工作中就遇到了，发现js和jquery的实现方法有很大的区别，这里总结一下，备忘。</p>
+</blockquote>
+<ol>
+<li><p><strong>获取元素的相对位置信息</strong></p>
+<ul>
+<li><p>原生js方法</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = obj.offsetLeft,</div><div class="line">    y = obj.offsetTop;</div></pre></td></tr></table></figure>
+</li>
+<li><p>jquery方法</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> _offset = $obj.offset(),</div><div class="line">    x = _offset.left,</div><div class="line">    y = _offset.top;</div></pre></td></tr></table></figure>
+<p>这两个方法看起来相似，其实有很大的不同.</p>
+<a id="more"></a></li>
+</ul>
+<ol>
+<li>原生js获取位置的参考信息是：父辈元素中的定位元素，即非static(默认值)的元素。而juqery方法始终返回相对于文档的偏移。</li>
+<li>当父元素有滚动条的时候，两者的情况也是不同的。js会把滚动的距离也算在相应的偏移量中，而jquery的值不受滚动条的影响。<br>综合以上两点不同可以看出：当父元素不会出现滚动条且父辈元素的定位属性都统一(即参考点要相同)的时候，可以用原生方法获取位置信息，弹框用相对定位(相对于上面提到的参考点).jquery则相对简单很多，因为他的计算始终相对于文档，所以弹框用fixed定位即可。</li>
+</ol>
+</li>
+<li><p><strong>获取元素所占区块的大小</strong></p>
+<ul>
+<li><p>原生js方法</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 方法1</span></div><div class="line"><span class="keyword">var</span> _width = obj.style.width,</div><div class="line">    _height = obj.style.height;</div><div class="line"><span class="comment">// 方法2</span></div><div class="line"><span class="keyword">var</span> _width = obj.offsetWidth,</div><div class="line">    _height = obj.offsetHeight;</div></pre></td></tr></table></figure>
+<p>  其中方法一基本可以忽略，因为他只能获取到内敛样式。当然可以代替他的方法也有，情参考<a href="https://erichui0906.github.io/2017/02/24/getStyle/" target="_blank" rel="external">通过原生js获取元素的样式</a></p>
+</li>
+<li><p>jquery方法</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 获取高度的方法类似</span></div><div class="line"><span class="keyword">var</span> _width1 = $obj.width(),</div><div class="line">    _width2 = $obj.innerWidth(),</div><div class="line">    _width3 = $obj.outerWidth(),</div><div class="line">    _width4 = $obj.outerWidth(<span class="literal">true</span>);</div></pre></td></tr></table></figure>
+<p>  有多重方法可以获取元素的大小，下面分别介绍异同。由盒模型可以知道，元素所占空间大小 = width + padding + border + margin; 所以可以得到以下对应关系：</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">_width1 = width;</div><div class="line">_width2 = width + padding;</div><div class="line">_width3 = width + padding + border;</div><div class="line">_width4 = width + padding + border + marign;</div></pre></td></tr></table></figure>
+<p>  原生js方法2获取的宽度_width相当于jquery的方放获取到的_width3;</p>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p>根据以上获取到的信息就可以定位弹框的位置了：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$popup.css(&#123; <span class="comment">// 此处把弹框定位在元素的右侧居中位置</span></div><div class="line">    left: x + _width,</div><div class="line">    <span class="attr">top</span>: y + _height/<span class="number">2</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+            <a href="/tags/JQuery/" rel="tag"># JQuery</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/24/getStyle/" rel="next" title="原生js获取元素的样式信息">
+                <i class="fa fa-chevron-left"></i> 原生js获取元素的样式信息
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/19/json/" rel="prev" title="json">
+                json <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Eric" />
+          <p class="site-author-name" itemprop="name">Eric</p>
+          <p class="site-description motion-element" itemprop="description">Stay hungry , Stay foolish</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eric</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

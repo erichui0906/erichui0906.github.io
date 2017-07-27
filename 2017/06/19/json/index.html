@@ -1,0 +1,683 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JSON,JS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="JSON和JS对象一 JSON是什么 JSON是基于文本的，轻量的，用于数据交换的，一种格式。   可以看到JSON的定义里面有很多的定语，现在就每个限定解释一下： 1. 基于文本这里的意思是相对于哪些基于二进制的数据来说的，所以在传输的过程中，传输的是符合JSON格式的字符串。 2. 轻量的在JSON之前有一种数据格式xml，在表示数据的时候，他需要很多的标签，所以没有JSON轻量。传输相同的数">
+<meta name="keywords" content="JSON,JS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="json">
+<meta property="og:url" content="http://yoursite.com/2017/06/19/json/index.html">
+<meta property="og:site_name" content="Eric&#39;s Blog">
+<meta property="og:description" content="JSON和JS对象一 JSON是什么 JSON是基于文本的，轻量的，用于数据交换的，一种格式。   可以看到JSON的定义里面有很多的定语，现在就每个限定解释一下： 1. 基于文本这里的意思是相对于哪些基于二进制的数据来说的，所以在传输的过程中，传输的是符合JSON格式的字符串。 2. 轻量的在JSON之前有一种数据格式xml，在表示数据的时候，他需要很多的标签，所以没有JSON轻量。传输相同的数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://orrzkg1ur.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-06-17%20%E4%B8%8B%E5%8D%885.24.01.png">
+<meta property="og:updated_time" content="2017-07-27T10:29:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="json">
+<meta name="twitter:description" content="JSON和JS对象一 JSON是什么 JSON是基于文本的，轻量的，用于数据交换的，一种格式。   可以看到JSON的定义里面有很多的定语，现在就每个限定解释一下： 1. 基于文本这里的意思是相对于哪些基于二进制的数据来说的，所以在传输的过程中，传输的是符合JSON格式的字符串。 2. 轻量的在JSON之前有一种数据格式xml，在表示数据的时候，他需要很多的标签，所以没有JSON轻量。传输相同的数">
+<meta name="twitter:image" content="http://orrzkg1ur.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-06-17%20%E4%B8%8B%E5%8D%885.24.01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/19/json/"/>
+
+
+
+
+
+  <title> json | Eric's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Eric's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/19/json/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Eric">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Eric's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Eric's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                json
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-19T11:13:33+08:00">
+                2017-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="JSON和JS对象"><a href="#JSON和JS对象" class="headerlink" title="JSON和JS对象"></a>JSON和JS对象</h2><h3 id="一-JSON是什么"><a href="#一-JSON是什么" class="headerlink" title="一 JSON是什么"></a>一 JSON是什么</h3><blockquote>
+<p>JSON是基于文本的，轻量的，用于数据交换的，一种格式。</p>
+</blockquote>
+<p> 可以看到JSON的定义里面有很多的定语，现在就每个限定解释一下：</p>
+<h4 id="1-基于文本"><a href="#1-基于文本" class="headerlink" title="1. 基于文本"></a>1. 基于文本</h4><p>这里的意思是相对于哪些基于二进制的数据来说的，所以在传输的过程中，传输的是符合JSON格式的字符串。</p>
+<h4 id="2-轻量的"><a href="#2-轻量的" class="headerlink" title="2. 轻量的"></a>2. 轻量的</h4><p>在JSON之前有一种数据格式xml，在表示数据的时候，他需要很多的标签，所以没有JSON轻量。传输相同的数据，JSON占用的带宽更小。<br><a id="more"></a></p>
+<h4 id="3-用于数据交换"><a href="#3-用于数据交换" class="headerlink" title="3. 用于数据交换"></a>3. 用于数据交换</h4><p>JSON轻量，且易于读写。前后端交互过程中：js对象=&gt;JSON字符串=&gt;后端对象，可以看到JSON这种数据很容易转化为各自（前后端)容易理解的对象，所以被广泛的用于数据交换。</p>
+<h4 id="4-一种格式"><a href="#4-一种格式" class="headerlink" title="4. 一种格式"></a>4. 一种格式</h4><p>JSON字符串是有很严格的要求的，下面以js对象做一下比较：</p>
+<ul>
+<li><strong>逗号</strong>  JSON最后一个属性后面不能加逗号。js对象无所谓，可加可不加。</li>
+<li><strong>键名</strong>  JSON必须用双引号 js对象无所谓，单引号，双引号，不加都可以。</li>
+<li><strong>键值</strong>  JSON，可以是null，boolean，string，number,数组，或者符合JSON格式             要求的对象。不能是undefined，函数，(+-)Infinity。<pre><code>js对象无所谓，都可以。
+</code></pre></li>
+<li><strong>数值</strong> JSON不能有前导0，小数点后面必须有数字。js没限制。</li>
+</ul>
+<h3 id="二-JS中与JSON有关的三个JSON函数"><a href="#二-JS中与JSON有关的三个JSON函数" class="headerlink" title="二 JS中与JSON有关的三个JSON函数"></a>二 JS中与JSON有关的三个JSON函数</h3><h4 id="1-JSON-stringify"><a href="#1-JSON-stringify" class="headerlink" title="1 JSON.stringify"></a>1 JSON.stringify</h4><p>该函数有三个参数，第一个为需要序列化的对象,后面两个不常用，在此不做介绍。<br>先看下面的代码，然后再说这个函数做的那些不为人知的事情。<br><img src="http://orrzkg1ur.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-06-17%20%E4%B8%8B%E5%8D%885.24.01.png" alt="Markdown"><br>从上面可以看出：</p>
+<ul>
+<li>会把属性转化为双引号。</li>
+<li>去掉最后一个属性后面的逗号。</li>
+<li>boolean，string，number这些包装对象，会被转化为原始值。</li>
+<li>不可枚举的属性会直接忽略。</li>
+<li>NaN,(+-)Infinity,会被转化为null。</li>
+<li>undefined，函数，Symbol，在数组中都会被转化为null。在非数组对象中都会被忽略掉。</li>
+</ul>
+<h4 id="2-JSON-parse"><a href="#2-JSON-parse" class="headerlink" title="2 JSON.parse"></a>2 JSON.parse</h4><p>该函数有两个参数，第一个为需要解析的JSON字符串，如果字符串不符合上述JSON字符串的格式要求，会跑出错误。第二个参数为可选的参数，处理解析后的属性然后将其返回。</p>
+<h4 id="3-object-toJSON"><a href="#3-object-toJSON" class="headerlink" title="3 object.toJSON"></a>3 object.toJSON</h4><p>如果js对象上实现了该方法，当该对象作为参数调用JSON.stringify的时候会首先执行toJSON方法，然后把返回值作为JSON.stringify的参数就行解析。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上可以看出JSON格式还是挺严格的，但stringify在你看不到的地方为我们做了很多事情，所以一般用这个方法的时候一般不会报错，而parse就不那么友好了，只要不符合格式就会报错，在拿到后台传过来的字符串进行解析的时候，最好try一下，捕获异常。<br>还有上面三个方法都不兼容&lt;=IE7的浏览器。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JSON/" rel="tag"># JSON</a>
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/24/position-space/" rel="next" title="获取元素位置信息和所占空间大小(via:js&jquery)">
+                <i class="fa fa-chevron-left"></i> 获取元素位置信息和所占空间大小(via:js&jquery)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/25/inherit/" rel="prev" title="javascript中各种继承方式的优缺点">
+                javascript中各种继承方式的优缺点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Eric" />
+          <p class="site-author-name" itemprop="name">Eric</p>
+          <p class="site-description motion-element" itemprop="description">Stay hungry , Stay foolish</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON和JS对象"><span class="nav-number">1.</span> <span class="nav-text">JSON和JS对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-JSON是什么"><span class="nav-number">1.1.</span> <span class="nav-text">一 JSON是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-基于文本"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 基于文本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-轻量的"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 轻量的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-用于数据交换"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 用于数据交换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-一种格式"><span class="nav-number">1.1.4.</span> <span class="nav-text">4. 一种格式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-JS中与JSON有关的三个JSON函数"><span class="nav-number">1.2.</span> <span class="nav-text">二 JS中与JSON有关的三个JSON函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-JSON-stringify"><span class="nav-number">1.2.1.</span> <span class="nav-text">1 JSON.stringify</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-JSON-parse"><span class="nav-number">1.2.2.</span> <span class="nav-text">2 JSON.parse</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-object-toJSON"><span class="nav-number">1.2.3.</span> <span class="nav-text">3 object.toJSON</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eric</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
